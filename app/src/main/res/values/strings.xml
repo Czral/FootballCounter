@@ -1,0 +1,20 @@
+<resources>
+
+    <string name="app_name">Football Counter</string>
+    <string name="background">Background</string>
+    <string name="juventus">Juventus</string>
+    <string name="barcelona">Barcelona</string>
+    <string name="juventus_logo">Juventus Logo</string>
+    <string name="barcelona_logo">Barcelona Logo</string>
+    <string name="reset">Reset</string>
+    <string name="goal">Goal</string>
+    <string name="pass">Pass</string>
+    <string name="foul">Foul</string>
+    <string name="zero">0</string>
+
+    <string name="juventus_wins">Juventus wins!</string>
+    <string name="barcelona_wins">Barcelona wins!</string>
+    <string name="draw">It\'s a draw!</string>
+
+
+</resources>
