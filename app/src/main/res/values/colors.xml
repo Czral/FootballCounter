@@ -14,4 +14,6 @@
     <!--Yellow color, used for the line between the two teams.-->
     <color name="yellow">#FFEB3B</color>
 
+    <color name="background_color">#EF9A9A</color>
+
 </resources>

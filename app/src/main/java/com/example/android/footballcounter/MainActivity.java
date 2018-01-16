@@ -1,17 +1,10 @@
 package com.example.android.footballcounter;
 
-import android.app.ActionBar;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentContainer;
-import android.os.Build;
-import android.support.v4.app.FragmentActivity;
+
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,21 +40,110 @@ public class MainActivity extends AppCompatActivity {
      */
     int passTeamB = 0;
 
+    /**
+     * TextViews for the displays.
+     */
+    private TextView scoreTeam_A;
+    private TextView scoreTeam_B;
+    private TextView foulTeam_A;
+    private TextView foulTeam_B;
+    private TextView passTeam_A;
+    private TextView passTeam_B;
+
+    /**
+     *
+     */
+    private static final String STATE_INTENT_GOAL_A = "saveIntentGoalA";
+    private static final String STATE_INTENT_GOAL_B = "saveIntentGoalB";
+    private static final String STATE_INTENT_PASS_A = "saveIntentPassA";
+    private static final String STATE_INTENT_PASS_B = "saveIntentPassB";
+    private static final String STATE_INTENT_FOUL_A = "saveIntentFoulA";
+    private static final String STATE_INTENT_FOUL_B = "saveIntentFoulB";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /**
+         * Initialize the TextViews.
+         */
+        scoreTeam_A = (TextView) findViewById(R.id.team_a_score);
+        scoreTeam_B = (TextView) findViewById(R.id.team_b_score);
+        foulTeam_A = (TextView) findViewById(R.id.team_a_foul);
+        foulTeam_B = (TextView) findViewById(R.id.team_b_foul);
+        passTeam_A = (TextView) findViewById(R.id.team_a_pass);
+        passTeam_B = (TextView) findViewById(R.id.team_b_pass);
+
+
+        //Saving state after rotation of the variables.
+        if (savedInstanceState == null) {
+
+            Intent saveIntent = getIntent();
+            goalTeamA = saveIntent.getIntExtra(STATE_INTENT_GOAL_A, goalTeamA);
+            foulTeamA = saveIntent.getIntExtra(STATE_INTENT_FOUL_A, foulTeamA);
+            passTeamA = saveIntent.getIntExtra(STATE_INTENT_PASS_A, passTeamA);
+
+            goalTeamB = saveIntent.getIntExtra(STATE_INTENT_GOAL_B, goalTeamB);
+            foulTeamB = saveIntent.getIntExtra(STATE_INTENT_FOUL_B, foulTeamB);
+            passTeamB = saveIntent.getIntExtra(STATE_INTENT_PASS_B, passTeamB);
+
+
+        } else {
+
+
+            goalTeamA = savedInstanceState.getInt(STATE_INTENT_GOAL_A);
+            foulTeamA = savedInstanceState.getInt(STATE_INTENT_FOUL_A);
+            passTeamA = savedInstanceState.getInt(STATE_INTENT_PASS_A);
+
+            goalTeamB = savedInstanceState.getInt(STATE_INTENT_GOAL_B);
+            foulTeamB = savedInstanceState.getInt(STATE_INTENT_FOUL_B);
+            passTeamB = savedInstanceState.getInt(STATE_INTENT_PASS_B);
+
+
+            //Displaying data in the TextViews after rotation.
+
+            scoreTeam_A.setText("" + goalTeamA);
+            scoreTeam_B.setText("" + goalTeamB);
+
+            foulTeam_A.setText("" + foulTeamA);
+            foulTeam_B.setText("" + foulTeamB);
+
+            passTeam_A.setText("" + passTeamA);
+            passTeam_B.setText("" + passTeamB);
+
+
+        }
+
 
     }
 
     /**
+     * Saving state after rotaion.
+     *
+     * @param savedInstanceState saves the state of variables in rotation.
+     */
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putInt("saveIntentGoalA", goalTeamA);
+        savedInstanceState.putInt("saveIntentFoulA", foulTeamA);
+        savedInstanceState.putInt("saveIntentPassA", passTeamA);
+
+        savedInstanceState.putInt("saveIntentGoalB", goalTeamB);
+        savedInstanceState.putInt("saveIntentFoulB", foulTeamB);
+        savedInstanceState.putInt("saveIntentPassB", passTeamB);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+    /**
      * Displays the given score for Team A.
      */
-    public void displayForTeamA(int score) {
-        TextView scoreView = (TextView) findViewById(R.id.team_a_score);
-        scoreView.setText(String.valueOf(score));
+    public void displayForTeamA(int goalTeamA) {
+        scoreTeam_A.setText(String.valueOf(goalTeamA));
     }
 
     /**
@@ -76,9 +158,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Displays the given score for Team B.
      */
-    public void displayForTeamB(int score) {
-        TextView scoreView = (TextView) findViewById(R.id.team_b_score);
-        scoreView.setText(String.valueOf(score));
+    public void displayForTeamB(int goalTeamB) {
+        scoreTeam_B.setText(String.valueOf(goalTeamB));
     }
 
     /**
@@ -93,9 +174,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Displays the given fouls for Team A.
      */
-    public void display2ForTeamA(int score) {
-        TextView scoreView = (TextView) findViewById(R.id.team_a_foul);
-        scoreView.setText(String.valueOf(score));
+    public void display2ForTeamA(int foulTeamA) {
+        foulTeam_A.setText(String.valueOf(foulTeamB));
     }
 
     /**
@@ -110,9 +190,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Displays the given fouls for Team B.
      */
-    public void display2ForTeamB(int score) {
-        TextView scoreView = (TextView) findViewById(R.id.team_b_foul);
-        scoreView.setText(String.valueOf(score));
+    public void display2ForTeamB(int foulTeamB) {
+        foulTeam_B.setText(String.valueOf(foulTeamB));
     }
 
     /**
@@ -127,9 +206,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Displays the given pass for Team A.
      */
-    public void display3ForTeamA(int score) {
-        TextView scoreView = (TextView) findViewById(R.id.team_a_pass);
-        scoreView.setText(String.valueOf(score));
+    public void display3ForTeamA(int passTeamA) {
+        passTeam_A.setText(String.valueOf(passTeamA));
     }
 
     /**
@@ -144,9 +222,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Displays the given pass for Team B.
      */
-    public void display3ForTeamB(int score) {
-        TextView scoreView = (TextView) findViewById(R.id.team_b_pass);
-        scoreView.setText(String.valueOf(score));
+    public void display3ForTeamB(int passTeamB) {
+        passTeam_B.setText(String.valueOf(passTeamB));
     }
 
     /**
@@ -157,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
         passTeamB = passTeamB + 1;
         display3ForTeamB(passTeamB);
     }
+
 
     public void resetScore(View v) {
 
@@ -172,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.barcelona_wins, Toast.LENGTH_SHORT).show();
         }
 
-               
+
         goalTeamA = 0;
         goalTeamB = 0;
         foulTeamA = 0;
