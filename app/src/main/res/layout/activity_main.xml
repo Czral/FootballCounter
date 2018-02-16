@@ -6,10 +6,6 @@
     android:background="@drawable/background"
     tools:context="com.example.android.footballcounter.MainActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -189,7 +185,5 @@
                 android:text="@string/reset" />
 
         </LinearLayout>
-
-    </RelativeLayout>
 
 </ScrollView>
